@@ -1,0 +1,8 @@
+{
+    "java.checkstyle.configuration": "/google_checks.xml",
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "[java]": {
+        "editor.detectIndentation": true,
+        "editor.tabSize": 2
+    }
+}

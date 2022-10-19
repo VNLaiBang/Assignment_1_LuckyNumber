@@ -23,16 +23,14 @@ public class LuckyNumber {
   /**
    * @param number - Winning number
    * @implNote Allow to launch game
+   * @return Number of guesses
    */
-  public static void play(int number) {
+  public static int play(int number) {
     System.out.println("There is a number in my head!");
 
     /* Input a number from keyboard */
     System.out.print("Can you guess? ");
     int guess = read.nextInt();
-
-    /* For fun */
-    System.out.println(number);
 
     int i = 1; /* Times guess */
     while (guess != number) {
@@ -45,25 +43,43 @@ public class LuckyNumber {
       i++;
     }
     System.out.println("Congratulation! It takes " + i + " guess times");
+    return i;
   }
 
-  public static void report() {
-
+  public static void report(int total_games, int total_guess, int best_game) {
+    System.out.println("\n------- Report -------");
+    System.out.println("Total games: " + total_games);
+    System.out.println("Total guess: " + total_guess);
+    System.out.println("Best game: " + best_game + " guess");
+    System.out.println("Guess average: " + ((float) total_guess / (float) total_games));
   }
 
   public static void main(String[] args) {
-    /* Initialize condition to launch game */
-    boolean answer = true;
-    int i = 1;
-    while (answer) {
-      int maximum = getRandomNumber(1000);
-      System.out.println("Maximum is now: " + maximum);
+    /* Initialize variable */
+    boolean answer; /* Answer of player */
+
+    int maximum = 100; /* generate the max from 0 to 1000 */
+    int best_game = maximum;
+    int total_guess = 0;
+    int total_games = 0;
+
+    do {
+      /* Generate a random number */
       int number = getRandomNumber(maximum);
-      play(number);
-      answer = replay();
-      i++;
-    }
-    System.out.print(i);
+
+      int launch = play(number);
+
+      if (best_game > launch) {
+        best_game = launch; /* Minimum count in every games */
+      }
+
+      total_guess += launch; /* Total count */
+      answer = replay(); /* Ask player if he/she want to replay */
+      total_games++;
+    } while (answer);
+
+    report(total_games, total_guess, best_game);
+    System.out.println("Thank you for playing this game! Have a good day!");
     read.close();
   }
 }
